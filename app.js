@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const fs = require('fs');
 const bodyParser = require('body-parser');
+var db=require('./public/connect.js');
 
 
 var indexRouter = require('./routes/index');
@@ -35,6 +36,9 @@ app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+    res.Header("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+    res.Header("Pragma", "no-cache"); // HTTP 1.0.
+    res.Header("Expires", "0"); // Proxies.
   next(createError(404));
 });
 
@@ -52,16 +56,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true,
 }));
+app.use(function(){
+    db.connect()
+});
 //函數集合
 
 
 var debug = require('debug')('my-application'); // debug模块
-app.set('port', process.env.PORT || 3000); // 设定监听端口
+app.set('port', process.env.PORT || 3001); // 设定监听端口
 
 //启动监听
 var server = app.listen(app.get('port'), function() {
     debug('Express server listening on port ' + server.address().port);
 });
+
 
 //module.exports = app;//这是 4.x 默认的配置，分离了 app 模块,将它注释即可，上线时可以重新改回来
 // module.exports = app;
