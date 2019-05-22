@@ -16,6 +16,7 @@
     "mysql": "^2.17.1",
     "node-kmeans": "^1.1.8",
     "nodemon": "^1.18.11",
-    "skmeans": "^0.10.1"
+    "skmeans": "^0.10.1",
+    "synaptic": "^1.1.4"
   }
 }
